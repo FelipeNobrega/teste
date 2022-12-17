@@ -1,0 +1,28 @@
+server:
+  port: 8080
+  
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: crudService
+        uri: lb://crud/
+        predicates:
+        - Path=/crud/**
+      - id: pedidoService
+        uri: lb://ped/
+        predicates:
+        - Path=/ped/**
+  
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/registry/eureka/
+
